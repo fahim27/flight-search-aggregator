@@ -19,22 +19,18 @@ class FlightController extends Controller
         $validator = Validator::make($request->all(), [
             'from'       => 'required|string',
             'to'         => 'required|string',
-            'date'       => 'required|date',
+            'date'       => 'required|date|date_format:Y-m-d|after:yesterday',
             'passengers' => 'required|integer|min:1'
+        ], [
+            'data.after'       => 'The date must be a future date.',
+            'date.date_format' => 'The date format must be Y-m-d - ' . date('Y-m-d'),
         ]);
 
         if ($validator->fails()) {
             return errorJsonResponse('Validation Error', $validator->errors()->all(), 422);
         }
 
-        $search = $this->flightService->search(
-            $request->input('from'),
-            $request->input('to'),
-            $request->input('date'),
-            $request->input('passengers')
-        );
-        // This is where you would implement the logic to search for flights
-        // using the mockup providers and return the results in a unified format.
-        return successJsonResponse('Flight search results', ['flights' => []]);
+        $search = $this->flightService->search($request);
+        return successJsonResponse('Flight search results', $search);
     }
 }
