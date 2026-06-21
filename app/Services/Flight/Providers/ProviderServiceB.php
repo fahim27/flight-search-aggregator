@@ -40,7 +40,7 @@ class ProviderServiceB extends FlightProviderService implements ProviderInterFac
             'to'            => $flight['destination'],
             'departure'     => date('Y-m-d H:i', strtotime($flight['departure_time'])),
             'arrival'       => date('Y-m-d H:i', strtotime($flight['arrival_time'])),
-            'stops'         => $flight['stops'] ?? 0,
+            'stops'         => $flight['segments'] ?? 0,
             'price'         => $flight['price']['amount'],
             'currency'      => $flight['price']['currency'],
         ];

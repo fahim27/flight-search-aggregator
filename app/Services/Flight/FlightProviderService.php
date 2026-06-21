@@ -13,6 +13,7 @@ class FlightProviderService
 
     protected function getMockupData($provider)
     {
-        return json_decode(file_get_contents(storage_path('mock-data/' . $provider . '.json')), true);
+
+        return json_decode(file_get_contents(public_path('mockup-data/' . $provider . '.json')), true);
     }
 }

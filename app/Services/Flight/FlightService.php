@@ -50,16 +50,49 @@ class FlightService
                 }
             }
 
-            $uniqueFlights = collect($searchResults)
-                ->groupBy('flight_number')
-                ->map(function ($group) {
-                    return $group->sortBy('price')->first();
-                })
-                ->values()
-                ->all();
+            $searchResults = collect($searchResults);
+
+            // Apply additional filters if provided in the request
+            if (!empty($request->carrier)) {
+                $searchResults = $searchResults->where('carrier', $request->carrier);
+            }
+
+            if ($request->has('stops')) {
+                $searchResults = $searchResults->where('stops', (int) $request->stops);
+            }
+
+            if (!empty($request->min_price)) {
+                $searchResults = $searchResults->where('price', '>=', $request->min_price);
+            }
+            if (!empty($request->max_price)) {
+                $searchResults = $searchResults->where('price', '<=', $request->max_price);
+            }
+
+            $uniqueFlights = $searchResults
+                ->sortBy('price')
+                ->unique('flight_number')
+                ->values();
+
+            //support sorting
+            if (!empty($request->sort)) {
+                switch ($request->sort) {
+                    case 'price_asc':
+                        $uniqueFlights = $uniqueFlights->sortBy('price');
+                        break;
+                    case 'price_desc':
+                        $uniqueFlights = $uniqueFlights->sortByDesc('price');
+                        break;
+                    case 'departure_asc':
+                        $uniqueFlights = $uniqueFlights->sortBy('departure');
+                        break;
+                    case 'departure_desc':
+                        $uniqueFlights = $uniqueFlights->sortByDesc('departure');
+                        break;
+                }
+            }
 
             return [
-                'flights' => $uniqueFlights,
+                'flights' => $uniqueFlights->values()->all(),
                 'meta'    => [
                     'providers_queried' => count($providers),
                     'providers_status'  => $providerStatus

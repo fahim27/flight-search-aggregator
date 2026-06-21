@@ -33,6 +33,8 @@ class ProviderServiceA extends FlightProviderService implements ProviderInterFac
     public function normalizeFlightSearchData(array $flight): array
     {
 
+
+
         return [
             'flight_id'     => $this->generateFlightId($flight['flight_no']),
             'carrier'       => $flight['carrier'],
@@ -41,7 +43,7 @@ class ProviderServiceA extends FlightProviderService implements ProviderInterFac
             'to'            => $flight['to'],
             'departure'     => date('Y-m-d H:i', strtotime($flight['depart'])),
             'arrival'       => date('Y-m-d H:i', strtotime($flight['arrive'])),
-            'stops'         => $flight['stops'],
+            'stops'         => $flight['stops'] ?? 0,
             'price'         => $flight['fare_usd'],
             'currency'      => "USD",
         ];

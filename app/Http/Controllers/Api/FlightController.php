@@ -20,10 +20,10 @@ class FlightController extends Controller
             'from'       => 'required|string',
             'to'         => 'required|string',
             'date'       => 'required|date|date_format:Y-m-d|after:yesterday',
-            'passengers' => 'required|integer|min:1'
+            'passengers' => 'nullable|integer|min:1' //included for API contract completeness, but not used for validation logic since provider responses do not contain passenger or inventory-related data.
         ], [
-            'data.after'       => 'The date must be a future date.',
-            'date.date_format' => 'The date format must be Y-m-d - ' . date('Y-m-d'),
+            'date.after' => 'The date must be a future date.',
+            'date.date_format' => 'The date format must be YYYY-MM-DD.'
         ]);
 
         if ($validator->fails()) {
