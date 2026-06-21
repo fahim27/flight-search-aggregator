@@ -33,7 +33,7 @@ class ProviderServiceB extends FlightProviderService implements ProviderInterFac
     public function normalizeFlightSearchData(array $flight): array
     {
         return [
-            'flight_id'     => $this->generateFlightId($flight['number']),
+            'flight_id'     => $this->generateFlightId($flight['number'] . "-" . $flight['airline_code']),
             'carrier'       => $flight['airline_code'],
             'flight_number' => $flight['number'],
             'from'          => $flight['origin'],

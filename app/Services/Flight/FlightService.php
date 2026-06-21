@@ -5,6 +5,8 @@ namespace App\Services\Flight;
 use App\Services\Flight\Providers\ProviderServiceA;
 use App\Services\Flight\Providers\ProviderServiceB;
 use App\Services\Flight\Providers\ProviderServiceC;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Str;
 
 class FlightService
 {
@@ -91,11 +93,20 @@ class FlightService
                 }
             }
 
+
+            $flights  = $uniqueFlights->values()->all();
+            $searchId = Str::uuid()->toString();
+
+            Cache::put("flight_search_{$searchId}", $flights, now()->addMinutes(30));  
+
             return [
-                'flights' => $uniqueFlights->values()->all(),
+                'flights' => $flights,
                 'meta'    => [
-                    'providers_queried' => count($providers),
-                    'providers_status'  => $providerStatus
+                    'search_id' => $searchId,
+                    'provider' =>  [
+                        'providers_queried' => count($providers),
+                        'providers_status'  => $providerStatus
+                    ]
                 ],
             ];
         }

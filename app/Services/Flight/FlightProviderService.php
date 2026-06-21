@@ -6,9 +6,9 @@ namespace App\Services\Flight;
 class FlightProviderService
 {
 
-    protected function generateFlightId(string $hasString)
+    protected function generateFlightId(string $flligId)
     {
-        return hash('sha256', $hasString);
+        return 'FL-' . strtoupper($flligId);
     }
 
     protected function getMockupData($provider)

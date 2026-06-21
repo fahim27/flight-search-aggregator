@@ -34,7 +34,7 @@ class ProviderServiceC extends FlightProviderService implements ProviderInterFac
     {
 
         return [
-            'flight_id'     => $this->generateFlightId($flight['code']),
+            'flight_id'     => $this->generateFlightId($flight['code']. "-" . $flight['iata']),
             'carrier'       => $flight['iata'],
             'flight_number' => $flight['code'],
             'from'          => $flight['route']['src'],
