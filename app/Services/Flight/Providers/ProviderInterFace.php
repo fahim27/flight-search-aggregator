@@ -5,6 +5,6 @@ namespace App\Services\Flight\Providers;
 
 interface ProviderInterFace
 {
-    public function search(object $request): array;
-    public function normalizeSearchData(array $flight): array;
+    public function flightSearch(object $request): array;
+    public function normalizeFlightSearchData(array $flight): array;
 }

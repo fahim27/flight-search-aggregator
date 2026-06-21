@@ -9,7 +9,6 @@ use App\Services\Flight\Providers\ProviderServiceC;
 class FlightService
 {
 
-
     public function search($request)
     { {
             $providers = [

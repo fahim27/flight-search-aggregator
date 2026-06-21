@@ -7,7 +7,7 @@ use App\Services\Flight\FlightProviderService;
 class ProviderServiceA extends FlightProviderService implements ProviderInterFace
 {
 
-    public function search(object $request): array
+    public function flightSearch(object $request): array
     {
         try {
             $data            = $this->getMockupData('provider-a');
@@ -16,7 +16,7 @@ class ProviderServiceA extends FlightProviderService implements ProviderInterFac
                     return $flight['from'] === $request->from && $flight['to'] === $request->to && date('Y-m-d', strtotime($flight['depart'])) === $request->date;
                 })
                 ->map(function ($flight) {
-                    return $this->normalizeSearchData($flight);
+                    return $this->normalizeFlightSearchData($flight);
                 })
                 ->values()
                 ->toArray();
@@ -30,7 +30,7 @@ class ProviderServiceA extends FlightProviderService implements ProviderInterFac
     }
 
 
-    public function normalizeSearchData(array $flight): array
+    public function normalizeFlightSearchData(array $flight): array
     {
 
         return [
