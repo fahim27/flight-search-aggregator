@@ -23,7 +23,7 @@ class FlightService
             foreach ($providers as $provider) {
                 try {
 
-                    $providerResults = $provider->search($request);
+                    $providerResults = $provider->flightSearch($request);
                     if (!isset($providerResults['flights']) || empty($providerResults['flights'])) {
                         continue;
                     }
