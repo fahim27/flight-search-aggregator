@@ -25,7 +25,7 @@ class ProviderServiceC extends FlightProviderService implements ProviderInterFac
                 'flights' => $data['results'] ?? []
             ];
         } catch (\Exception $e) {
-            throw new \Exception("Provider A failed");
+            throw new \Exception("Provider C failed");
         }
     }
 
@@ -34,7 +34,7 @@ class ProviderServiceC extends FlightProviderService implements ProviderInterFac
     {
 
         return [
-            'flight_id'     => $this->generateFlightId($flight['code']. "-" . $flight['iata']),
+            'flight_id'     => $this->generateFlightId($flight['code'] . "-" . $flight['iata']),
             'carrier'       => $flight['iata'],
             'flight_number' => $flight['code'],
             'from'          => $flight['route']['src'],

@@ -25,7 +25,7 @@ class ProviderServiceB extends FlightProviderService implements ProviderInterFac
                 'flights' => $data['data']
             ];
         } catch (\Exception $e) {
-            throw new \Exception("Provider A failed");
+            throw new \Exception("Provider B failed");
         }
     }
 
