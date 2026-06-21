@@ -97,12 +97,16 @@ class FlightService
             $flights  = $uniqueFlights->values()->all();
             $searchId = Str::uuid()->toString();
 
-            Cache::put("flight_search_{$searchId}", $flights, now()->addMinutes(30));  
+            Cache::put("flight_search_{$searchId}", $flights, now()->addMinutes(30));
 
             return [
                 'flights' => $flights,
                 'meta'    => [
-                    'search_id' => $searchId,
+                    'search' => [
+                        'id'                => $searchId,
+                        'search_time'       => now()->toDateTimeString(),
+                        'search_expired_at' => now()->addMinutes(30)->toDateTimeString()
+                    ],
                     'provider' =>  [
                         'providers_queried' => count($providers),
                         'providers_status'  => $providerStatus
